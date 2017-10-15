@@ -13,18 +13,25 @@ namespace MBD.Controller.Impl
         abstract protected double weight { get; }
         private const Char point = '.';
         private const Char comma = ',';
+        private const char space = ' ';
+        private const String Empty = "";
 
         public abstract ComparationResult compare(ComparationInput input);
 
         protected List<String> splitToSentence(String text)
         {
-            return new List<String>(text.Split(new Char[] { point, comma }));
+            List<String> result = null;
+            if (text != null)
+            {
+                result = new List<String>(text.Split(new Char[] { point, comma }));
+            }
+            return result == null ? new List<String>() : result;
         }
 
 
         protected List<String> splitToWord(String text)
         {
-            String[] split = text.Split(' ');
+            String[] split = text == null ? new String[] { } : text.Split(new Char[] { point, comma , space } );
             List<String> splitWithoutSpaces = trim(new List<String>(split));
             List<String> splitWithoutEmpty = reduceListByEmpty(splitWithoutSpaces);
             return splitWithoutEmpty;
@@ -39,19 +46,19 @@ namespace MBD.Controller.Impl
                 toConvert = regex.Replace(toConvert, " ");
                 return toConvert;
             }
-            return String.Empty;
+            return Empty;
         }
 
         protected String removeAllPunctuation(String input)
         {
-            return new String(input.ToCharArray()
+            return input == null ? Empty : new String(input.ToCharArray()
                .Where(c => !Char.IsPunctuation(c))
                .ToArray());
         }
 
         public String removeWhitespace(String input)
         {
-            return new String(input.ToCharArray()
+            return input == null ? Empty : new String(input.ToCharArray()
                 .Where(c => !Char.IsWhiteSpace(c))
                 .ToArray());
         }
@@ -62,7 +69,7 @@ namespace MBD.Controller.Impl
             {
                 return toConvert.ToLower();
             }
-            return String.Empty;
+            return Empty;
         }
 
         protected String trim(String toConvert)
@@ -71,7 +78,7 @@ namespace MBD.Controller.Impl
             {
                 return toConvert.Trim();
             }
-            return String.Empty;
+            return Empty;
         }
 
         protected List<String> trim(List<String> toConvert)

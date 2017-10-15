@@ -11,80 +11,76 @@ using MBD.Model;
 namespace Comparator.Tests
 {
     [TestClass()]
-    public class NumberOfLettersTests
+    public class NumberOfWordTests
     {
         [TestMethod()]
-        public void testIsEqualsLenght()
+        public void testIsEqualsNumerOfWordDots()
         {
-            IComparator comparator = new NumerOfLettersComparator();
+            IComparator comparator = new NumberOfWordComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
-            input.file1 = "testtesttest";
-            input.file2 = "esttesttestt";
+            input.file1 = "test.test.test";
+            input.file2 = "estt.estte.stt";
 
             ComparationResult result = comparator.compare(input);
 
             Assert.AreEqual(1, result.score);
-            Assert.AreEqual(1, result.weigth);
+            Assert.AreEqual(0.5, result.weigth);
             Assert.AreEqual(input.filename1, result.filename1);
             Assert.AreEqual(input.filename2, result.filename2);
-
         }
 
         [TestMethod()]
-        public void testIsEqualsLenghtRemoveWhiteSpacedAndPunctuation()
+        public void testIsEqualsNumerOfWordMix()
         {
-            IComparator comparator = new NumerOfLettersComparator();
+            IComparator comparator = new NumberOfWordComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
-            input.file1 = "test,te   stt.est";
-            input.file2 = "e   st,test.testt";
+            input.file1 = "test,test.test";
+            input.file2 = "estt.estte stt";
 
             ComparationResult result = comparator.compare(input);
 
             Assert.AreEqual(1, result.score);
-            Assert.AreEqual(1, result.weigth);
+            Assert.AreEqual(0.5, result.weigth);
             Assert.AreEqual(input.filename1, result.filename1);
             Assert.AreEqual(input.filename2, result.filename2);
-
         }
 
         [TestMethod()]
-        public void testIsNotEqualsLenght()
+        public void testIsNotEqualsNumerOfWordMix()
         {
-            IComparator comparator = new NumerOfLettersComparator();
+            IComparator comparator = new NumberOfWordComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
-            input.file1 = "testtesttest";
-            input.file2 = "esttesttest";
+            input.file1 = "testtest.test";
+            input.file2 = "estt.estte   stt";
 
             ComparationResult result = comparator.compare(input);
 
             Assert.AreEqual(0, result.score);
-            Assert.AreEqual(1, result.weigth);
+            Assert.AreEqual(0.5, result.weigth);
             Assert.AreEqual(input.filename1, result.filename1);
             Assert.AreEqual(input.filename2, result.filename2);
-
         }
 
         [TestMethod()]
-        public void testIsNotEqualsLenghtNullCheck()
+        public void testIsEqualsNumerOfWordNullCheck()
         {
-            IComparator comparator = new NumerOfLettersComparator();
+            IComparator comparator = new NumberOfWordComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
-   
+
             ComparationResult result = comparator.compare(input);
 
             Assert.AreEqual(1, result.score);
-            Assert.AreEqual(1, result.weigth);
+            Assert.AreEqual(0.5, result.weigth);
             Assert.AreEqual(input.filename1, result.filename1);
             Assert.AreEqual(input.filename2, result.filename2);
-
         }
     }
 }

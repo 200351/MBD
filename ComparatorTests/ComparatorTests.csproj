@@ -52,6 +52,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controller\Comparator\Impl\NumberOfLettersTests.cs" />
+    <Compile Include="Controller\Comparator\Impl\NumberOfWordTests.cs" />
+    <Compile Include="Controller\Comparator\Impl\NumerOfSentenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
