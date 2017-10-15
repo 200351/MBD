@@ -8,13 +8,13 @@ namespace MBD
 {
     public class ComparationDetail
     {
-        private int file1_sentence_number { get; set; }
-        private String file1_full_sentence { get; set; }
+        public int file1_sentence_number { get; set; }
+        public String file1_full_sentence { get; set; }
 
-        private int file2_sentence_number { get; set; }
-        private String file2_full_sentence { get; set; }
+        public int file2_sentence_number { get; set; }
+        public String file2_full_sentence { get; set; }
 
-        private IList<String> similarity { get; set; }
+        public IList<String> similarity { get; set; }
        
 
     }

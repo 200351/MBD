@@ -11,10 +11,10 @@ namespace MBD.Controller.Impl
     public abstract class AbstractComparator : IComparator
     {
         abstract protected double weight { get; }
-        private const Char point = '.';
-        private const Char comma = ',';
-        private const char space = ' ';
-        private const String Empty = "";
+        protected const Char point = '.';
+        protected const Char comma = ',';
+        protected const char space = ' ';
+        protected const String Empty = "";
 
         public abstract ComparationResult compare(ComparationInput input);
 
