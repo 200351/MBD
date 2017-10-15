@@ -16,7 +16,7 @@ namespace Comparator.Tests
         [TestMethod()]
         public void testIsEqualsLenghtTest()
         {
-            IComparator comparator = new NumerOfLetters();
+            IComparator comparator = new NumerOfLettersComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
@@ -35,7 +35,7 @@ namespace Comparator.Tests
         [TestMethod()]
         public void testIsNotEqualsLenghtTest()
         {
-            IComparator comparator = new NumerOfLetters();
+            IComparator comparator = new NumerOfLettersComparator();
             ComparationInput input = new ComparationInput();
             input.filename1 = "filename1";
             input.filename2 = "filename2";
