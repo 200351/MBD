@@ -85,7 +85,7 @@ namespace MBD.Controller.Impl
         {
             if (toConvert != null)
             {
-                toConvert.ForEach(c => c.Trim());
+                toConvert = toConvert.Select(c => c.Trim()).ToList();
             }
             return toConvert;
             
@@ -95,7 +95,7 @@ namespace MBD.Controller.Impl
         {
             if (toReduce != null)
             {
-                toReduce.RemoveAll(r => r.Trim().Length < 1);
+                toReduce = toReduce.Where(r => r.Trim().Length > 0).ToList();
             }
             return toReduce;
         }

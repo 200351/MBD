@@ -8,7 +8,7 @@ using MBD.Model;
 
 namespace MBD.Controller.Comparator.Impl
 {
-    class SameSentenceComparator: AbstractComparator, IComparator
+    public class SameSentenceComparator: AbstractComparator, IComparator
     {
 
         public override ComparationResult compare(ComparationInput input)
@@ -31,12 +31,12 @@ namespace MBD.Controller.Comparator.Impl
             result.filename1 = input.filename1;
             result.filename2 = input.filename2;
             result.details = new List<ComparationDetail>();
-            for(int i = 0; i < text1Sentences.Count(); i++)
+            for(int i = 0; i < text1ToAnalyze.Count(); i++)
             {
-                for (int j = 0; j < text2Sentences.Count(); j++)
+                for (int j = 0; j < text2ToAnalyze.Count(); j++)
                 {
-                    var sentence1 = text1Sentences[i];
-                    var sentence2 = text2Sentences[j];
+                    var sentence1 = text1ToAnalyze[i];
+                    var sentence2 = text2ToAnalyze[j];
                     if (sentence1.Equals(sentence2))
                     {
                         ComparationDetail detail = new ComparationDetail();
@@ -49,8 +49,12 @@ namespace MBD.Controller.Comparator.Impl
                     }
                 }
             }
-            result.score = result.details.Count / (text1Sentences.Count + text2Sentences.Count);
-
+            HashSet<String> uniqueResult = new HashSet<String>(result.details.Select(r => r.file1_full_sentence));
+            HashSet<String> uniqueSentence1= new HashSet<String>(text1ToAnalyze);
+            HashSet<String> uniqueSentence2 = new HashSet<String>(text2ToAnalyze);
+            double score = (double) ((2.0 * (double)uniqueResult.Count) / ((double)uniqueSentence1.Count + (double)uniqueSentence2.Count));
+            result.score = Math.Round(score, 2, MidpointRounding.AwayFromZero);
+            result.weigth = weight;
             return result;
         }
 

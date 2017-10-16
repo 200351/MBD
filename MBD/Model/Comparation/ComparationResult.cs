@@ -12,7 +12,7 @@ namespace MBD
         public double score { get; set; }
         public String filename1 { get; set; }
         public String filename2 { get; set; }
-        public IList<ComparationDetail> details { get; set; }
+        public List<ComparationDetail> details { get; set; }
 
     }
 }
