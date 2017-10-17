@@ -10,11 +10,13 @@ namespace MBD.Controller.Impl
 {
     public abstract class AbstractComparator : IComparator
     {
-        abstract protected double weight { get; }
-        protected const Char point = '.';
-        protected const Char comma = ',';
-        protected const char space = ' ';
-        protected const String Empty = "";
+        abstract protected double weight { get; set; }
+        protected const Char POINT_CHAR = '.';
+        protected const Char COMMA_CHAR = ',';
+        protected const char SPACE_CHAR = ' ';
+        protected const String EMPTY = "";
+        protected const String SPACE = " ";
+
 
         public abstract ComparationResult compare(ComparationInput input);
 
@@ -23,7 +25,9 @@ namespace MBD.Controller.Impl
             List<String> result = null;
             if (text != null)
             {
-                result = new List<String>(text.Split(new Char[] { point, comma }));
+                char[] newline = Environment.NewLine.ToCharArray();
+                char[] split = newline.Concat(new Char[] { POINT_CHAR, COMMA_CHAR }).ToArray();
+                result = new List<String>(text.Split(split, StringSplitOptions.RemoveEmptyEntries));
             }
             return result == null ? new List<String>() : result;
         }
@@ -31,7 +35,7 @@ namespace MBD.Controller.Impl
 
         protected List<String> splitToWord(String text)
         {
-            String[] split = text == null ? new String[] { } : text.Split(new Char[] { point, comma , space } );
+            String[] split = text == null ? new String[] { } : text.Split(new Char[] { POINT_CHAR, COMMA_CHAR , SPACE_CHAR } );
             List<String> splitWithoutSpaces = trim(new List<String>(split));
             List<String> splitWithoutEmpty = reduceListByEmpty(splitWithoutSpaces);
             return splitWithoutEmpty;
@@ -46,19 +50,19 @@ namespace MBD.Controller.Impl
                 toConvert = regex.Replace(toConvert, " ");
                 return toConvert;
             }
-            return Empty;
+            return EMPTY;
         }
 
         protected String removeAllPunctuation(String input)
         {
-            return input == null ? Empty : new String(input.ToCharArray()
-               .Where(c => !Char.IsPunctuation(c))
+            return input == null ? EMPTY : new String(input.ToCharArray()
+               .Where(c => Char.IsLetterOrDigit(c) || Char.IsWhiteSpace(c))
                .ToArray());
         }
 
         public String removeWhitespace(String input)
         {
-            return input == null ? Empty : new String(input.ToCharArray()
+            return input == null ? EMPTY : new String(input.ToCharArray()
                 .Where(c => !Char.IsWhiteSpace(c))
                 .ToArray());
         }
@@ -69,7 +73,7 @@ namespace MBD.Controller.Impl
             {
                 return toConvert.ToLower();
             }
-            return Empty;
+            return EMPTY;
         }
 
         protected String trim(String toConvert)
@@ -78,7 +82,7 @@ namespace MBD.Controller.Impl
             {
                 return toConvert.Trim();
             }
-            return Empty;
+            return EMPTY;
         }
 
         protected List<String> trim(List<String> toConvert)
@@ -98,6 +102,26 @@ namespace MBD.Controller.Impl
                 toReduce = toReduce.Where(r => r.Trim().Length > 0).ToList();
             }
             return toReduce;
+        }
+
+        protected List<String> createSequence(List<String> words, int countOfWords)
+        {
+            List<String> sequences = new List<String>();
+            for (int i = 0; i < words.Count - countOfWords + 1; i++)
+            {
+                String sequence = "";
+                for (int j = i; j < i + countOfWords; j++)
+                {
+                    if (j < words.Count + 1)
+                    {
+                        sequence += words[j];
+                        sequence += SPACE;
+                    }
+                }
+                sequences.Add(sequence.TrimEnd());
+            }
+
+            return sequences;
         }
     }
 }

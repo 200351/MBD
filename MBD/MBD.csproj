@@ -63,6 +63,7 @@
     <Compile Include="Controller\Comparator\Impl\NumberOfSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\NumberOfWordComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\NumerOfLettersComparator.cs" />
+    <Compile Include="Controller\Comparator\Impl\WordsSequenceInSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\SameSentenceComparator.cs" />
     <Compile Include="Model\Comparation\ComparationInput.cs" />
     <Compile Include="View\App.xaml.cs">

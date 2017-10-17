@@ -55,6 +55,7 @@
     <Compile Include="Controller\Comparator\Impl\NumberOfWordTests.cs" />
     <Compile Include="Controller\Comparator\Impl\NumerOfSentenceTests.cs" />
     <Compile Include="Controller\Comparator\Impl\SameSentenceTests.cs" />
+    <Compile Include="Controller\Comparator\Impl\WordsSequenceInSentenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

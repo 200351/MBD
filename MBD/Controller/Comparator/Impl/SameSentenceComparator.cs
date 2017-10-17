@@ -44,7 +44,7 @@ namespace MBD.Controller.Comparator.Impl
                         detail.file1_sentence_number = i;
                         detail.file2_full_sentence = sentence2;
                         detail.file2_sentence_number = j;
-                        detail.similarity = new List<String>(sentence1.Split(space));
+                        detail.similarity = new List<String>(sentence1.Split(SPACE_CHAR));
                         result.details.Add(detail);
                     }
                 }
@@ -63,6 +63,10 @@ namespace MBD.Controller.Comparator.Impl
             get
             {
                 return 3;
+            }
+            set
+            {
+                weight = value;
             }
         }
     }

@@ -30,6 +30,10 @@ namespace MBD.Controller.Comparator.Impl
             {
                 return 1;
             }
+            set
+            {
+                weight = value;
+            }
         }
     }
 }
