@@ -8,7 +8,7 @@ using MBD.Model;
 
 namespace MBD.Controller.Comparator.Impl
 {
-    public class WordsSequenceInSentenceComparator: AbstractComparator, IComparator
+    public class WordsIndependentOrderInSentenceComparator : AbstractComparator, IComparator
     {
 
         public override ComparationResult compare(ComparationInput input)
@@ -22,7 +22,7 @@ namespace MBD.Controller.Comparator.Impl
             result.details = new List<ComparationDetail>();
 
             int countOfWords = input.countOfWord;
-            int countOfSequence = 0;
+            int countOfParts = 0;
             for (int i = 0; i < text1ToAnalyze.Count(); i++)
             {
                 for (int j = 0; j < text2ToAnalyze.Count(); j++)
@@ -35,40 +35,53 @@ namespace MBD.Controller.Comparator.Impl
 
                     if (words1.Count > countOfWords - 1 && words2.Count > countOfWords - 1)
                     {
-                        List<String> sequence1 = createSequence(words1, countOfWords);
-                        List<String> sequence2 = createSequence(words2, countOfWords);
-                        countOfSequence += sequence1.Count() + sequence2.Count();
-                        List<String> commonParts = sequence1.Where(item => sequence2.Contains(item)).ToList();
+                        IEnumerable<IEnumerable<String>> parts1 = GetPermutations<String>(words1.AsEnumerable(), countOfWords);
+                        IEnumerable<IEnumerable<String>> parts2 = GetPermutations<String>(words2.AsEnumerable(), countOfWords);
+                        countOfParts += parts1.Count() + parts2.Count();
+
+                        List<List<String>> commonParts = new List<List<string>>();
+                        foreach (var part1 in parts1)
+                        {
+                            foreach (var part2 in parts2)
+                            {
+                                if (part1.All(p => part2.Contains(p)))
+                                {
+                                    commonParts.Add(part1.ToList());
+                                }
+                            }
+                        }
+
                         List<ComparationDetail> detailsPart = prepareDetails(i, j, sentence1, sentence2, commonParts);
                         result.details.AddRange(detailsPart);
                     }
                 }
             }
-            result.score = countScore(result, countOfSequence);
+
+            result.score = countScore(result, countOfParts);
             result.weigth = prepareWeight(countOfWords);
             return result;
         }
 
         private double prepareWeight(int countOfWords)
         {
-            double weight = (double)((double)countOfWords * 3.0) / ((double)countOfWords + 2.0);
+            double weight = (double)((double)countOfWords * 2.0) / ((double)countOfWords + 2.0);
             return Math.Round(weight, 2, MidpointRounding.AwayFromZero);
         }
 
-        private double countScore(ComparationResult result, int countOfSequence)
+        private double countScore(ComparationResult result, int countOfCommonParts)
         {
             double score = 1;
-            if (countOfSequence > 0)
+            if (countOfCommonParts > 0)
             {
-                score = (double)((2.0 * (double)result.details.Count) / (double)countOfSequence);
+                score = (double)((2.0 * (double)result.details.Count) / (double)countOfCommonParts);
             }
-            return Math.Round(score, 2, MidpointRounding.AwayFromZero); ;
+            return Math.Round(score, 2, MidpointRounding.AwayFromZero);
         }
 
-        private List<ComparationDetail> prepareDetails(int i, int j, string sentence1, string sentence2, List<string> commonParts)
+        private List<ComparationDetail> prepareDetails(int i, int j, string sentence1, string sentence2,List<List<String>> commonParts)
         {
             List<ComparationDetail> details = new List<ComparationDetail>();
-            foreach (String part in commonParts)
+            foreach (List<String> part in commonParts)
             {
                 ComparationDetail detail = prepareDetail(i, j, sentence1, sentence2, part);
                 details.Add(detail);
@@ -76,14 +89,14 @@ namespace MBD.Controller.Comparator.Impl
             return details;
         }
 
-        private ComparationDetail prepareDetail(int i, int j, string sentence1, string sentence2, string part)
+        private ComparationDetail prepareDetail(int i, int j, string sentence1, string sentence2, List<String> part)
         {
             ComparationDetail detail = new ComparationDetail();
             detail.file1_full_sentence = sentence1;
             detail.file1_sentence_number = i;
             detail.file2_full_sentence = sentence2;
             detail.file2_sentence_number = j;
-            detail.similarity = new List<string>(part.Split(SPACE_CHAR));
+            detail.similarity = part;
             return detail;
         }
 

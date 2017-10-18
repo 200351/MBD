@@ -35,10 +35,9 @@ namespace MBD.Controller.Impl
 
         protected List<String> splitToWord(String text)
         {
-            String[] split = text == null ? new String[] { } : text.Split(new Char[] { POINT_CHAR, COMMA_CHAR , SPACE_CHAR } );
-            List<String> splitWithoutSpaces = trim(new List<String>(split));
-            List<String> splitWithoutEmpty = reduceListByEmpty(splitWithoutSpaces);
-            return splitWithoutEmpty;
+            String[] split = text == null ? new String[] { } : text.Split(new Char[] { POINT_CHAR, COMMA_CHAR, SPACE_CHAR });
+            List<String> splitWithoutSpaces = new List<String>(split);
+            return splitWithoutSpaces;
         }
 
         protected String changeManySpacesToOne(String toConvert)
@@ -92,7 +91,7 @@ namespace MBD.Controller.Impl
                 toConvert = toConvert.Select(c => c.Trim()).ToList();
             }
             return toConvert;
-            
+
         }
 
         protected List<String> reduceListByEmpty(List<String> toReduce)
@@ -122,6 +121,23 @@ namespace MBD.Controller.Impl
             }
 
             return sequences;
+        }
+
+        protected IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> items, int count)
+        {
+            int i = 0;
+            foreach (var item in items)
+            {
+                if (count == 1)
+                    yield return new T[] { item };
+                else
+                {
+                    foreach (var result in GetPermutations(items.Skip(i + 1), count - 1))
+                        yield return new T[] { item }.Concat(result);
+                }
+
+                ++i;
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MBD.Controller.Comparator.Impl
 
             List<String> text1Sentences = splitToSentence(text1RemovedManySpaces);
             List<String> text2Sentences = splitToSentence(text2RemovedManySpaces);
-            
+
             List<String> text1ToAnalyze = reduceListByEmpty(trim(text1Sentences));
             List<String> text2ToAnalyze = reduceListByEmpty(trim(text2Sentences));
 
@@ -31,7 +31,7 @@ namespace MBD.Controller.Comparator.Impl
             result.filename1 = input.filename1;
             result.filename2 = input.filename2;
             result.details = new List<ComparationDetail>();
-            for(int i = 0; i < text1ToAnalyze.Count(); i++)
+            for (int i = 0; i < text1ToAnalyze.Count(); i++)
             {
                 for (int j = 0; j < text2ToAnalyze.Count(); j++)
                 {
@@ -50,12 +50,19 @@ namespace MBD.Controller.Comparator.Impl
                 }
             }
             HashSet<String> uniqueResult = new HashSet<String>(result.details.Select(r => r.file1_full_sentence));
-            HashSet<String> uniqueSentence1= new HashSet<String>(text1ToAnalyze);
+            HashSet<String> uniqueSentence1 = new HashSet<String>(text1ToAnalyze);
             HashSet<String> uniqueSentence2 = new HashSet<String>(text2ToAnalyze);
-            double score = (double) ((2.0 * (double)uniqueResult.Count) / ((double)uniqueSentence1.Count + (double)uniqueSentence2.Count));
-            result.score = Math.Round(score, 2, MidpointRounding.AwayFromZero);
+            result.score = countScore(uniqueResult, uniqueSentence1, uniqueSentence2);
             result.weigth = weight;
             return result;
+        }
+
+        private double countScore(HashSet<string> uniqueResult, HashSet<string> uniqueSentence1, HashSet<string> uniqueSentence2)
+        {
+            double numerator = (2.0 * (double)uniqueResult.Count);
+            double denumerator = (double)uniqueSentence1.Count + (double)uniqueSentence2.Count;
+            double score = denumerator == 0 ? 1 : (numerator / denumerator);
+            return Math.Round(score, 2, MidpointRounding.AwayFromZero);
         }
 
         protected override double weight

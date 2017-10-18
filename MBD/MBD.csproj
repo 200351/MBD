@@ -60,9 +60,11 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Controller\Comparator\Impl\AbstractComparator.cs" />
+    <Compile Include="Controller\Comparator\Impl\AntiplagiarismSystem.cs" />
     <Compile Include="Controller\Comparator\Impl\NumberOfSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\NumberOfWordComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\NumerOfLettersComparator.cs" />
+    <Compile Include="Controller\Comparator\Impl\WordsIndependentOrderInSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\WordsSequenceInSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\SameSentenceComparator.cs" />
     <Compile Include="Model\Comparation\ComparationInput.cs" />
