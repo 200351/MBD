@@ -1,5 +1,6 @@
 ﻿using MBD.Model;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,41 +18,43 @@ namespace MBD.Controller.Comparator.Impl
         private static IComparator wordsSequence = new WordsSequenceInSentenceComparator();
         private static IComparator wordIndependenceOrder = new WordsIndependentOrderInSentenceComparator();
 
-        private List<IComparator> comparators = 
-            new List<IComparator> {
+        private ConcurrentBag<IComparator> comparators = 
+            new ConcurrentBag<IComparator> {
                 numberOfLetters, numberOfWords, numberOfSentence, sameSentence,
             };
 
-        List<IComparator> comparatorsAdvance =
-           new List<IComparator> {
+        ConcurrentBag<IComparator> comparatorsAdvance =
+           new ConcurrentBag<IComparator> {
                 wordsSequence, wordIndependenceOrder
            };
 
         public double run(ComparationInput input)
         {
-            List<ComparationResult> results =
-                new List<ComparationResult>(comparators.Count() + comparatorsAdvance.Count());
+            ConcurrentBag<ComparationResult> results = new ConcurrentBag<ComparationResult>();
             runComparators(input, results);
             runAdvanceComparators(input, results);
             double result = countResult(results);
             return result;
         }
 
-        private double countResult(List<ComparationResult> results)
+        private double countResult(ConcurrentBag<ComparationResult> results)
         {
             double numerator = 0;
             double denumerator = 0;
             foreach (var result in results)
             {
-                numerator += (double) (result.score * result.weigth);
-                denumerator += (double) result.weigth;
+                if (result != null)
+                {
+                    numerator += (double)(result.score * result.weigth);
+                    denumerator += (double)result.weigth;
+                }
             }
 
             double score = denumerator == 0 ? 0 : (numerator / denumerator);
             return Math.Round(score, 2, MidpointRounding.AwayFromZero);
         }
 
-        private void runAdvanceComparators(ComparationInput input, List<ComparationResult> results)
+        private void runAdvanceComparators(ComparationInput input, ConcurrentBag<ComparationResult> results)
         {
             Parallel.ForEach(comparatorsAdvance, 
                 c => 
@@ -69,7 +72,7 @@ namespace MBD.Controller.Comparator.Impl
                 });
         }
 
-        private void runComparators(ComparationInput input, List<ComparationResult> results)
+        private void runComparators(ComparationInput input, ConcurrentBag<ComparationResult> results)
         {
             Parallel.ForEach(comparators, 
                 c => 

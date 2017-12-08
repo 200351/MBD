@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C98059E-AA74-4E67-9934-0DE8EA488649}</ProjectGuid>
+    <ProjectGuid>{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ComparatorTests</RootNamespace>
-    <AssemblyName>ComparatorTests</AssemblyName>
+    <RootNamespace>DBTests</RootNamespace>
+    <AssemblyName>DBTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -52,13 +52,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controller\Comparator\Impl\AntiplagiarismSystemTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\NumberOfLettersTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\NumberOfWordTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\NumerOfSentenceTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\SameSentenceTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\WordInSentenceTests.cs" />
-    <Compile Include="Controller\Comparator\Impl\WordsIndependentOrderInSentence.cs" />
+    <Compile Include="DBConnection\DBCreateDataTest.cs" />
+    <Compile Include="DBConnection\RepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +62,6 @@
       <Name>MBD</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

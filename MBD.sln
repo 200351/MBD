@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBD", "MBD\MBD.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComparatorTests", "ComparatorTests\ComparatorTests.csproj", "{6C98059E-AA74-4E67-9934-0DE8EA488649}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBTests", "DBTests\DBTests.csproj", "{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6C98059E-AA74-4E67-9934-0DE8EA488649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C98059E-AA74-4E67-9934-0DE8EA488649}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C98059E-AA74-4E67-9934-0DE8EA488649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C36F7ACB-48D9-4DD3-B9DF-4D6700B2F0F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

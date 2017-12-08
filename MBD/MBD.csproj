@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +38,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\..\System.Data.SQLite_DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,7 +71,15 @@
     <Compile Include="Controller\Comparator\Impl\WordsIndependentOrderInSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\WordsSequenceInSentenceComparator.cs" />
     <Compile Include="Controller\Comparator\Impl\SameSentenceComparator.cs" />
+    <Compile Include="DBConnection\DBConnection.cs" />
+    <Compile Include="DBConnection\DBCreator.cs" />
+    <Compile Include="DBConnection\DBDataCreator.cs" />
+    <Compile Include="DBConnection\Repository.cs" />
+    <Compile Include="DBConnection\SQLCommand.cs" />
+    <Compile Include="DBConnection\SQLQueryExecutor.cs" />
     <Compile Include="Model\Comparation\ComparationInput.cs" />
+    <Compile Include="Model\DB\Data.cs" />
+    <Compile Include="Model\DB\PairData.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -107,6 +119,7 @@
   <ItemGroup>
     <None Include="View\App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
