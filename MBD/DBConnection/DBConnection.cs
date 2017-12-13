@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MBD.DBConnection
 {
@@ -20,6 +22,7 @@ namespace MBD.DBConnection
             {
                 SQLiteConnection.CreateFile("database.db");
             }
+            string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
             if (File.Exists("database.db"))
             {

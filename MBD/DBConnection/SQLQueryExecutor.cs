@@ -14,11 +14,11 @@ namespace MBD.DBConnection
 {
     public class SQLQueryExecutor
     {
-        private const String EQUAL = "=";
-        private const String GREATER = ">";
-        private const String LESS = "<";
-        private const String EQUAL_GREATER = ">=";
-        private const String EQUAL_LESS = "<=";
+        public static string EQUAL = "=";
+        public static string GREATER = ">";
+        public static string LESS = "<";
+        public static string EQUAL_GREATER = ">=";
+        public static string EQUAL_LESS = "<=";
 
         public List<PairData> executeQuery(SQLCommand query)
         {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MBD.Model.DB;
+using System.Diagnostics;
 
 namespace DBTests
 {
@@ -15,6 +16,7 @@ namespace DBTests
         [TestMethod()]
         public void testFindTextWithNameContainsAndSoreGreaterThen()
         {
+            Console.WriteLine("asdasdjasdgjas");
             Repository repository = new Repository();
             const string filename = "nazwa1";
             const double score = 0.40;
@@ -28,6 +30,7 @@ namespace DBTests
                     Assert.IsTrue(data.data1.filename.Contains(filename));
                     Assert.IsTrue(data.data2.filename.Contains(filename));
                     Assert.IsTrue(data.score > score);
+                    Console.WriteLine(data.toString());
                 }
 
             }
